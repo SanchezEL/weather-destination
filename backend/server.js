@@ -8,7 +8,7 @@ const City = require('./models/weather')
 const app = express();
 const router = express.Router();
 
-const API_PORT = process.env.API_PORT || 3000;
+const API_PORT = process.env.API_PORT || 3030;
 
 mongoose.connect('mongodb+srv://admin:admin@cluster0-bdhvc.mongodb.net/test?retryWrites=true&w=majority',{ useNewUrlParser: true })
 // mongoose.connect(getSecret('dbUri'));
@@ -34,21 +34,30 @@ router.get('/city', (req, res) => {
 });
 
 router.post('/city', (req, res) => {
-  var city = new City();
-  const text= req.body;
-  if (!text) {
+  var city = new City(req.body);
+  // res.send(req.body)
+
+  // const text= req.body;
+  if (!city.city) {
     return res.json({
       success: false,
       error: 'You must provide a city'
     });
   }
-  city = text.text;
+  // city = text.city;
+  // res.send(city)
   city.save(err => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
 });
 app.use('/api', router);
+let allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Headers', "*");
+  next();
+}
+app.use(allowCrossDomain);
 
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
