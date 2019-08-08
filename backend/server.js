@@ -11,7 +11,6 @@ const router = express.Router();
 const API_PORT = process.env.API_PORT || 3030;
 
 mongoose.connect('mongodb+srv://admin:admin@cluster0-bdhvc.mongodb.net/test?retryWrites=true&w=majority',{ useNewUrlParser: true })
-// mongoose.connect(getSecret('dbUri'));
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
@@ -28,8 +27,8 @@ router.get('/city', (req, res) => {
   // res.send({message: 'a'})
   console.log(City)
   City.find((err, city) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true, data: city });
+    if (err) return res.json({ error: err });
+    return res.json({data: city });
   });
 });
 
@@ -52,12 +51,7 @@ router.post('/city', (req, res) => {
   });
 });
 app.use('/api', router);
-let allowCrossDomain = function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', "*");
-  res.header('Access-Control-Allow-Headers', "*");
-  next();
-}
-app.use(allowCrossDomain);
+
 
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
