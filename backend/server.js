@@ -50,6 +50,16 @@ router.post('/city', (req, res) => {
     return res.json({ success: true });
   });
 });
+router.delete('/city/:cityId', (req, res) => {
+  const { cityId } = req.params;
+  if (!cityId) {
+    return res.json({ success: false, error: 'No city id provided' });
+  }
+  City.remove({ _id: cityId }, (error, comment) => {
+    if (error) return res.json({ success: false, error });
+    return res.json({ success: true });
+  });
+});
 app.use('/api', router);
 
 
