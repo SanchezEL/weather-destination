@@ -19,7 +19,6 @@ handlePost = (id) =>{
   });
 }
 postData = (url = '', data = {}) => {
-  // Default options are marked with *
     return fetch(url, {
         method: 'POST', 
         mode: 'cors', 
@@ -43,10 +42,9 @@ postData = (url = '', data = {}) => {
           <Input 
             onChange={(e)=>{this.setState({searchTerm: e.target.value})}} onKeyUp={
               (e) => {
-                // this.handlePost(this.state.searchTerm)
                 if (this.props.loadTime && e.key === "Enter" && this.state.searchTerm) {
                   this.postData('/api/city', {city: this.state.searchTerm})
-                    .then(data => console.log(JSON.stringify(data))) // JSON-string from `response.json()` call
+                    .then(data => console.log(JSON.stringify(data))) 
                     .catch(error => console.error(error));                  
                   this.props.loadTime(this.state.searchTerm);
                   this.props.hasSearched(true);

@@ -3,8 +3,6 @@ import React from 'react'
 export default function Display(props) {
   var hourWeather = props.weather[0]
   console.log(props)
-  // console.log(hourWeather, 'yes')
-  // if(hourWeather.length !== 0)  console.log(hourWeather, 'no' , hourWeather)
   console.log('the props in display are', props)
   if(hourWeather && props.searched){
     return (
