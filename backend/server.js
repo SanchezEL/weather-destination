@@ -2,8 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const logger = require('morgan')
 const mongoose = require('mongoose')
-// const getSecret = require('./confidential')
 const City = require('./models/weather')
+const path = require('path')
 
 const app = express();
 const router = express.Router();
@@ -62,6 +62,11 @@ router.delete('/city/:cityId', (req, res) => {
 });
 app.use('/api', router);
 
-
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static( 'client/public'))
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'public', 'index.html'))
+  })
+}
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
