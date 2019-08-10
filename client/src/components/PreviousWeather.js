@@ -74,7 +74,7 @@ class PreviousWeather extends Component {
                   return(
                     <li key={city._id}>
                       <p><b>{city.city.toUpperCase()}:</b></p>
-                      <p>It will be {Math.round((((this.props.weather[i].temp) - 273.15) * (9/5) + 32 ))}°F at the estimated time of arrival...</p>
+                      <p>It will be {Math.round((((this.props.weather[this.props.weather.length-1-i].temp) - 273.15) * (9/5) + 32 ))}°F at the estimated time of arrival...</p>
                       <Button id={city._id} color="primary" onClick={() =>{this.handleDelete(city._id)}}>remove</Button>
                     </li>
                   )
