@@ -86,8 +86,8 @@ class PreviousWeather extends Component {
       );
     }else{
       return(
-        <div>
-
+        <div className="prev-container">
+          
         </div>
       )
     }

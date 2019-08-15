@@ -108,3 +108,15 @@ input{
   transform: scale(1.01);
   box-shadow: .7px .7px #434852;
 }
+.mainComponents{
+  display:flex; 
+  flex-direction:row;
+  /* border: 1px solid yellow */
+}
+.searchDisplay{
+  display:flex;
+  flex-direction:column;
+  align-items: flex-end;
+  width: 1900px;
+  /* border: 1px solid blue; */
+}
