@@ -27,7 +27,7 @@ export const loadWeather = (searchTerm, time) => {
       // .then(res => console.log(res.json()))
       .then(res => res.json())
       // .then(results=> console.log(results.list))
-      .then(results => dispatch(searchLoaded(results.list[arrivalValue].main)))
+      .then(results => dispatch(searchLoaded(results.list[arrivalValue])))
       .catch(function(error) {                        
         console.log('Request failed', error);
       });

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 
 
 const  weatherResults = (state = [], action) => {
-  console.log(action, state)
+  console.log(action, state, 'theWeather')
   switch (action.type) {
     case 'WEATHER_RESULTS_LOADED':
       return [action.value, ...state]
@@ -11,7 +11,7 @@ const  weatherResults = (state = [], action) => {
   }
 }
 const  hasSearched = (state = false, action) => {
-  console.log(action, state, 'hasSearched')
+  console.log(action, state)
   switch (action.type) {
     case 'USER_HAS_SEARCHED':
       return action.value

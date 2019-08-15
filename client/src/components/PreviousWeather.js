@@ -57,12 +57,12 @@ class PreviousWeather extends Component {
   }
 
   render() {
-    console.log(this.state.data, 'help me with backend', this.props.weather[2], this.props)
+    console.log(this.state.data, 'help me with backend', this.props.weather, this.props.weather[1])
     var start = 0
     if(this.props.searched){
       start = 1;
     }
-    if(this.props.weather.length >= this.state.data.length && this.props.weather.length>=1){
+    if((this.props.weather.length >= this.state.data.length && this.props.weather.length>=1) && !(this.props.searched && this.props.weather.length ===1)){
       return (
         <div className="prev-container">
           <div className="prev-cities">
@@ -74,7 +74,7 @@ class PreviousWeather extends Component {
                   return(
                     <li key={city._id}>
                       <p><b>{city.city.toUpperCase()}:</b></p>
-                      <p>It will be {Math.round((((this.props.weather[this.props.weather.length-1-i].temp) - 273.15) * (9/5) + 32 ))}°F at the estimated time of arrival...</p>
+                      <p>It will be {Math.round((((this.props.weather[this.props.weather.length-1-i].main.temp) - 273.15) * (9/5) + 32 ))}°F with {this.props.weather[0].weather[0].description} at the estimated time of arrival...</p>
                       <Button id={city._id} color="primary" onClick={() =>{this.handleDelete(city._id)}}>remove</Button>
                     </li>
                   )
