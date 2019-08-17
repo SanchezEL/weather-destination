@@ -15,7 +15,6 @@ class PreviousWeather extends Component {
 
   componentDidMount() {
     this.loadCitiesFromServer();
-    console.log('anything')
     this.state.data.map(city =>{
       this.props.loadTime(city.city)
       console.log(this.props.weather, 'nerf')
@@ -26,6 +25,7 @@ class PreviousWeather extends Component {
 
   loadCitiesFromServer = () => {
     console.log('the props in prevWeather are: ', this.props)
+    //finds the cities already in the database and find the time it will take to get there and the weather
     fetch('/api/city/')
       .then(data =>  data.json())
       .then((res) => {
@@ -62,6 +62,7 @@ class PreviousWeather extends Component {
     if(this.props.searched){
       start = 1;
     }
+    //won't display unless there is already one city in the database
     if((this.props.weather.length >= this.state.data.length && this.props.weather.length>=1) && !(this.props.searched && this.props.weather.length ===1)){
       return (
         <div className="prev-container">

@@ -43,11 +43,11 @@ postData = (url = '', data = {}) => {
             onChange={(e)=>{this.setState({searchTerm: e.target.value})}} onKeyUp={
               (e) => {
                 if (this.props.loadTime && e.key === "Enter" && this.state.searchTerm) {
-                  this.postData('/api/city', {city: this.state.searchTerm})
+                  this.postData('/api/city', {city: this.state.searchTerm}) //posts the searched city to the database
                     .then(data => console.log(JSON.stringify(data))) 
                     .catch(error => console.error(error));                  
-                  this.props.loadTime(this.state.searchTerm);
-                  this.props.hasSearched(true);
+                  this.props.loadTime(this.state.searchTerm);//pulls the travel time and weather data from the APIs
+                  this.props.hasSearched(true); //lets the rest of the document know that the user has searched a city
                 }
               }
             } 

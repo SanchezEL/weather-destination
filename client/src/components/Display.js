@@ -4,6 +4,7 @@ export default function Display(props) {
   var hourWeather = props.weather[0]
   console.log(props)
   console.log('the props in display are', props.weather.length, props.weather[0])
+  //if the user has searched for a city and data has been returned back to them it will display the data for that city
   if(hourWeather && props.searched){
     console.log(props.weather[0].weather[0], 'what in tarnation')
     return (
@@ -13,7 +14,7 @@ export default function Display(props) {
         </div>
       </div>
     )
-  }
+  }//if the user has not yet searched it will display text prompting the user to search for a city
   else{
     return(
       <div className="display-container">

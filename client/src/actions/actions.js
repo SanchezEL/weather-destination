@@ -15,6 +15,7 @@ export const loadWeather = (searchTerm, time) => {
   console.log(searchTerm,time, 'this')
   var arrival = time.duration.text.split(' ')
   var arrivalValue =0
+  // check how many hours it takes to get to destination and set arrivalValue to the next 3 hour interval
   if(arrival.length === 4){
     arrivalValue += (Math.round(parseInt(arrival[0])/3))-1
   }else if(arrival.length === 6){
@@ -26,7 +27,7 @@ export const loadWeather = (searchTerm, time) => {
     fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${searchTerm},us&APPID=5671234935774cd73b5c543867a39f6d`)
       // .then(res => console.log(res.json()))
       .then(res => res.json())
-      // .then(results=> console.log(results.list))
+      // finds the weather results at the correct 3 hour interval
       .then(results => dispatch(searchLoaded(results.list[arrivalValue])))
       .catch(function(error) {                        
         console.log('Request failed', error);
