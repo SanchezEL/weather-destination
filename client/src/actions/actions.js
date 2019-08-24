@@ -1,4 +1,6 @@
 import { connect } from 'react-redux'
+import axios from 'axios'
+import jwt from 'jsonwebtoken'
 
 
 export const loadTime = (searchTerm) => {
@@ -47,4 +49,84 @@ export const hasSearched = (searched) => {
     type: "USER_HAS_SEARCHED",
     value: searched
   }
+}
+export function login({ userName, password, cities }) {
+  return dispatch => {
+    return axios({
+      url: '/api/login',
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify({ userName, password, cities })
+    })
+    .then(res => {
+      document.cookie = `id_token=${res.data};max-age=300;`
+      const payload = jwt.verify(res.data, 'secret')
+      console.log("payload: ", payload._doc)
+      dispatch({
+        type: 'LOGIN',
+        value: payload._doc
+      })
+    })
+    .catch(err => Promise.reject(err))
+  }
+}
+
+export function logout() {
+  return {
+    type: 'LOGOUT'
+  }
+}
+
+export function signUp({ userName, password, cities }) {
+  return dispatch => {
+    return axios({
+      url: '/api/signup',
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify({ userName, password, cities })
+    })
+    .then((res) => dispatch(login({ userName, password, cities: [] })))
+    .catch(err => Promise.reject(err))
+  }
+}
+
+export function setUser(user) {
+  return {
+    type: 'SET_USER',
+    value: user
+  }
+}
+
+export function updateUser(userName) {
+  return dispatch => {
+    return axios({
+      url: '/api/user',
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify({ userName }),
+      withCredentials: true
+    })
+    .catch(err => Promise.reject(err))
+  }  
+}
+
+export function updatePassword(password) {
+  return dispatch => {
+    return axios({
+      url: '/api/password',
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify({ password }),
+      withCredentials: true
+    })
+    .catch(err => Promise.reject(err))
+  }  
 }

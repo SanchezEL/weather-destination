@@ -2,11 +2,15 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const logger = require('morgan')
 const mongoose = require('mongoose')
-const City = require('./models/weather')
+const Auth = require('./models/weather')
 const path = require('path')
+const jwt = require('jsonwebtoken')
+const router = express.Router()
+const AuthController = require('./controllers/controllers')
+
 
 const app = express();
-const router = express.Router();
+// const router = express.Router();
 
 const API_PORT = process.env.API_PORT || 3030;
 
@@ -26,11 +30,14 @@ router.get('/', (req, res) => {
 router.get('/city', (req, res) => {
   // res.send({message: 'a'})
   console.log(City)
-  City.find((err, city) => {
+  Auth.find((err, city) => {
     if (err) return res.json({ error: err });
     return res.json({data: city });
   });
 });
+router.get('/user', (req,res) => {
+  Auth.find((err, city))
+})
 
 router.post('/city', (req, res) => {
   var city = new City(req.body);
@@ -55,18 +62,34 @@ router.delete('/city/:cityId', (req, res) => {
   if (!cityId) {
     return res.json({ success: false, error: 'No city id provided' });
   }
-  City.remove({ _id: cityId }, (error, comment) => {
+  Auth.remove({ _id: cityId }, (error, comment) => {
     if (error) return res.json({ success: false, error });
     return res.json({ success: true });
   });
 });
+router.post('/signup', (req, res) => {
+  AuthController.SignUp(req.body)
+    .then(() => res.send('User created successfully'))
+    .catch((err) => res.send(err.message))
+})
+
+router.post('/login', (req, res) => {
+  // contents of login route
+  console.log('server /login', AuthController.Login(req.body))
+  AuthController.Login(req.body)
+    .then(result => {
+      if(!result) res.status(404).send('No user')
+      const token  = jwt.sign({result}, "secret")
+      return res.send(token)
+    })
+})
 app.use('/api', router);
 
-if(process.env.NODE_ENV === 'production'){
-  app.use(express.static( 'client/public'))
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'public', 'index.html'))
-  })
-}
+// if(process.env.NODE_ENV === 'production'){
+//   app.use(express.static( 'client/public'))
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'client', 'public', 'index.html'))
+//   })
+// }
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
