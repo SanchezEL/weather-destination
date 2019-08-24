@@ -12,7 +12,7 @@ const SignUp = ({ userName, password }) => {
 
 const Login = ({ userName, password }) => {
   // contents of login function
-  console.log(password)
+  console.log("password",password)
   const hash = crypto.createHash('md5').update(password).digest("hex")
   let au = authModel.findOne({ userName: userName, password: hash })
   console.log("auM", au)
