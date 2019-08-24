@@ -58,7 +58,7 @@ export function login({ userName, password, cities }) {
       headers: {
         "Content-Type": "application/json"
       },
-      data: JSON.stringify({ userName, password, cities })
+      data: JSON.stringify({ userName, password })
     })
     .then(res => {
       document.cookie = `id_token=${res.data};max-age=300;`

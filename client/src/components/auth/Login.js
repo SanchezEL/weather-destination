@@ -29,27 +29,10 @@ class Login extends Component {
   }
 
   login = (e) => {
+    debugger
     e.preventDefault()
-    fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ ...this.state })
-    })
-    .then(res => {
-      if (res.status !== 200) throw new Error('user could not be found')
-      return res.text()
-    })
-    .then(token => {
-      // create cookie here
-      console.log('token', this.state)
-      document.cookie = `id_token=${token};max-age=60;`
-      const payload = jwt.verify(token, 'secret')
-      return this.props.login(payload)
-    })
-    .catch(err => this.setState({ message: err.message }))
-    .then(() => this.setState({ userName: '', password: '' }))
+    return this.props.login({ ...this.state })
+      .catch(err => this.setState({ userName: '', password: '', message: err.response.data }))
   }
 
   render() {
