@@ -10,7 +10,7 @@ export default function Display(props) {
     return (
       <div className="display-container">
         <div className="display">
-          <p>It will be {Math.round((((props.weather[0].main.temp) - 273.15) * (9/5) + 32 ))}°F with {props.weather[0].weather[0].description} at your estimated time of arrival!</p>
+          <p>It will be {Math.round((((props.weather[0].main.temp) - 273.15) * (9/5) + 32 ))}°F with {props.weather[0].weather[0].description} at the time you're estimated to arrive at your destination!</p>
         </div>
       </div>
     )
@@ -19,7 +19,7 @@ export default function Display(props) {
     return(
       <div className="display-container">
         <div className="display">
-          <p>Enter in the name of the city you're headed to and we'll tell you what the weather will be like at the time you get there!</p>
+          <p>Enter in the name of the city in which you're headed into the search bar and we'll tell you what the weather will be like at the time you get there!</p>
         </div>
       </div>
     )
