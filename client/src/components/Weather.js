@@ -21,6 +21,7 @@ handlePost = (id) =>{
 }
 postData = (url = '', data = {}) => {
   this.props.user.cities.push(this.state.searchTerm)
+  console.log('whatsthisnoisenow', this.props.user.cities, this.props.user)
   this.props.updateUser(this.props.user, this.props.user.cities)
   console.log('whatsthisnoisenow', this.props.user.cities, this.props)
   // console.log('user in weather', this.props)

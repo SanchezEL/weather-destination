@@ -97,7 +97,7 @@ router.post('/login', (req, res) => {
 // }
 
 router.put('/user', (req,res) =>{
-  console.log('putting user name', req.body)
+  console.log('putting user name', req.body.cities, req.body._id)
   AuthController.UpdateUser(req.body.cities, req.body._id)
     .then(() => res.send('user updated'))
 })

@@ -103,7 +103,7 @@ export function setUser(user) {
 }
 
 export function updateUser(user, cities) {
-  console.log('updating the user', cities)
+  console.log('updating the user', user, cities)
   return dispatch => {
     console.log(cities)
     return axios({
@@ -112,7 +112,7 @@ export function updateUser(user, cities) {
       headers: {
         "Content-Type": "application/json"
       },
-      data: JSON.stringify(user, { cities }),
+      data: JSON.stringify(user, {cities}),
       withCredentials: true
     })
     .catch(err => Promise.reject(err))

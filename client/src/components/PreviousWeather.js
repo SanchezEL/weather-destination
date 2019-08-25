@@ -29,7 +29,7 @@ class PreviousWeather extends Component {
   mapTimeToWeather() {
     console.log('is it mapping', this.state.data)
     this.state.data.map(city =>{
-      console.log(city)
+      console.log('mapped',city)
       this.props.loadTime(city)
       console.log(this.props.weather, 'nerf')
     })
@@ -44,54 +44,52 @@ class PreviousWeather extends Component {
         console.log('whats that item', item)
         newData[i] =(item)
       })
+      //need to reset props.weather here
       newData.map(city =>{
-        console.log(city)
+        console.log('city map', city)
         this.props.loadTime(city)
         console.log(this.props.weather, 'nerf')
       })
       console.log('newdata',newData)
       this.setState({ data: newData })
       console.log('kachow',this.state.data)
-      this.mapTimeToWeather()
+      // this.mapTimeToWeather()
     }
     // finds the cities already in the database and find the time it will take to get there and the weather
   }
-  handleDelete = (id) =>{
-    const i = this.state.data.findIndex(city => city._id === id);
+  handleDelete = (city) =>{
+    const i = this.props.user.cities.indexOf(city);
+    console.log(i)
     const newData = [
-      ...this.state.data.slice(0, i),
-      ...this.state.data.slice(i + 1),
+      ...this.props.user.cities.slice(0, i),
+      ...this.props.user.cities.slice(i + 1),
     ];
+    console.log('this the data', this.state.data, newData)
     this.setState({ data: newData})
-    console.log(this.state.data)
-    console.log(id, 'being deleted')
-    fetch(`api/city/${id}`, { method: 'DELETE' })
-    .then(res => res.json()).then((res) => {
-      if (!res.success) this.setState({ error: res.error });
-    });
+    this.props.user.cities.splice(i,1)
+    console.log(this.state.data, this.props.user)
+    this.props.updateUser(this.props.user, this.props.user.cities)
+    // fetch(`api/city/${id}`, { method: 'DELETE' })
+    // .then(res => res.json()).then((res) => {
+    //   if (!res.success) this.setState({ error: res.error });
+    // });
   }
 
   render() {
-    console.log(this.state.data, 'help me with backend', this.props.weather, this.props.weather[1])
-    
-    // if(this.props.searched){
-    //   start = 1;
-    // }
-    //won't display unless there is already one city in the database
     if((this.props.weather.length >= this.state.data.length && this.props.weather.length>=1) && !(this.props.searched && this.props.weather.length ===1)){
       return (
         <div className="prev-container">
           <div className="prev-cities">
             <h2>Previous Cities:</h2>
             <ul>
-              {this.state.data.map((city,i) =>{
+              {this.props.user.cities.map((city,i) =>{
                 console.log(this.props.weather.length, this.props.weather, 'what the heck', i)
                 if(i<4){
                   return(
                     <li key={i}>
                       <p><b>{city.toUpperCase()}:</b></p>
-                      <p>It will be {Math.round((((this.props.weather[this.props.weather.length-1-i].main.temp) - 273.15) * (9/5) + 32 ))}°F with {this.props.weather[0].weather[0].description} at the estimated time of arrival...</p>
-                      <Button id={city._id} color="primary" onClick={() =>{this.handleDelete(city._id)}}>remove</Button>
+                      <p>It will be {Math.round((((this.props.weather[i].main.temp) - 273.15) * (9/5) + 32 ))}°F with {this.props.weather[0].weather[0].description} at the estimated time of arrival...</p>
+                      <Button id={city._id} color="primary" onClick={() =>{this.handleDelete(city)}}>remove</Button>
                     </li>
                   )
                 }

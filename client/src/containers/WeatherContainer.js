@@ -13,7 +13,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadTime: (searchTerm) => dispatch(loadTime(searchTerm)),
     hasSearched: (searched) => dispatch(hasSearched(searched)),
-    updateUser: (cities) => dispatch(updateUser(cities))
+    updateUser: (user, cities) => dispatch(updateUser(user, cities))
   }
 }
 

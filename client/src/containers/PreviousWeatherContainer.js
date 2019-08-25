@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
-import {loadTime} from "../actions/actions";
+import {loadTime, updateUser} from "../actions/actions";
 import PreviousWeather from "../components/PreviousWeather";
 // import store from '../store'
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadTime: (searchTerm) => dispatch(loadTime(searchTerm))
+    loadTime: (searchTerm) => dispatch(loadTime(searchTerm)),
+    updateUser: (user, cities) => dispatch(updateUser(user, cities))
   }
 }
 
