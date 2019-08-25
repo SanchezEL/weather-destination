@@ -9,7 +9,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.weatherResults, "wo")
   return {
     weather: state.weatherResults,
     searched: state.hasSearched
