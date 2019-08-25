@@ -21,10 +21,11 @@ const  hasSearched = (state = false, action) => {
 }
 const user = (state = {}, action) => {
   // state = ./state.js => user
-  console.log('action',action.type)
+  console.log('action',action.type, action.value)
   switch (action.type) {
     case 'LOGIN':
     case 'SET_USER':
+      console.log('settinguser', action.value)
       return action.value
     case 'LOGOUT':
       return {}

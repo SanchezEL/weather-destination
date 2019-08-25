@@ -29,7 +29,6 @@ class Login extends Component {
   }
 
   login = (e) => {
-    debugger
     e.preventDefault()
     return this.props.login({ ...this.state })
       .catch(err => this.setState({ userName: '', password: '', message: err.response.data }))

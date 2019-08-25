@@ -3,6 +3,7 @@ import Login from '../components/auth/Login'
 import { login } from '../actions/actions'
 
 const mapStateToProps = (store) => {
+  console.log('mapstatelogin', store)
   return {
     user: store.user
   }

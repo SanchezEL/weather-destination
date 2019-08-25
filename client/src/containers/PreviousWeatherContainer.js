@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import {loadTime} from "../actions/actions";
 import PreviousWeather from "../components/PreviousWeather";
+// import store from '../store'
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -8,12 +9,12 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log(state, "wo")
+const mapStateToProps = (state, store) => {
+  console.log(state, "mapstateprev", store)
   return {
     weather: state.weatherResults,
     searched: state.hasSearched,
-    city: state.user
+    user: state.user
   }
 }
 

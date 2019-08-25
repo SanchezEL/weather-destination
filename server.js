@@ -29,8 +29,9 @@ router.get('/', (req, res) => {
 
 router.get('/city', (req, res) => {
   // res.send({message: 'a'})
-  console.log(City)
+  console.log('Authscuseme', req)
   Auth.find((err, city) => {
+    console.log(city)
     if (err) return res.json({ error: err });
     return res.json({data: city });
   });
@@ -40,6 +41,7 @@ router.get('/user', (req,res) => {
 })
 
 router.post('/city', (req, res) => {
+
   var city = new City(req.body);
   // res.send(req.body)
 
@@ -72,7 +74,6 @@ router.post('/signup', (req, res) => {
     .then(() => res.send('User created successfully'))
     .catch((err) => res.send(err.message))
 })
-
 router.post('/login', (req, res) => {
   // contents of login route
   console.log('server /login', AuthController.Login(req.body))
@@ -83,6 +84,22 @@ router.post('/login', (req, res) => {
       const token  = jwt.sign({ ...result }, "secret")
       return res.send(token)
     })
+})
+// function isAuthenticated(req, res, next) {
+//   console.log('nah nah yo', req.cookies)
+//   if (!req.cookies.id_token) {
+//     return res.status(401).send('Unauthorized')
+//   }
+//   const payload = jwt.verify(req.cookies.id_token, "secret")
+//   console.log('isthisit',req)
+//   req.user = payload._doc
+//   return next()
+// }
+
+router.put('/user', (req,res) =>{
+  console.log('putting user name', req.body)
+  AuthController.UpdateUser(req.body.cities, req.body._id)
+    .then(() => res.send('user updated'))
 })
 app.use('/api', router);
 

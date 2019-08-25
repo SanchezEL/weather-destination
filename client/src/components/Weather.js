@@ -14,24 +14,29 @@ export default class Weather extends Component {
     }
   }
 handlePost = (id) =>{
+  console.log('user in weather', this.props)
   fetch(`api/city/${id}`, { method: 'Post' })
   .then(res => res.json()).then((res) => {
   });
 }
 postData = (url = '', data = {}) => {
-    return fetch(url, {
-        method: 'POST', 
-        mode: 'cors', 
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        redirect: 'follow', 
-        referrer: 'no-referrer',
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json());
+  this.props.user.cities.push(this.state.searchTerm)
+  this.props.updateUser(this.props.user, this.props.user.cities)
+  console.log('whatsthisnoisenow', this.props.user.cities, this.props)
+  // console.log('user in weather', this.props)
+  //   return fetch(url, {
+  //       method: 'POST', 
+  //       mode: 'cors', 
+  //       cache: 'no-cache',
+  //       credentials: 'same-origin',
+  //       headers: {
+  //           'Content-Type': 'application/json',
+  //       },
+  //       redirect: 'follow', 
+  //       referrer: 'no-referrer',
+  //       body: JSON.stringify(data),
+  //   })
+  //   .then(response => response.json());
 }
   render() {
     return (
@@ -44,8 +49,8 @@ postData = (url = '', data = {}) => {
               (e) => {
                 if (this.props.loadTime && e.key === "Enter" && this.state.searchTerm) {
                   this.postData('/api/city', {city: this.state.searchTerm}) //posts the searched city to the database
-                    .then(data => console.log(JSON.stringify(data))) 
-                    .catch(error => console.error(error));                  
+                    // .then(data => console.log(JSON.stringify(data))) 
+                    // .catch(error => console.error(error));                  
                   this.props.loadTime(this.state.searchTerm);//pulls the travel time and weather data from the APIs
                   this.props.hasSearched(true); //lets the rest of the document know that the user has searched a city
                 }

@@ -1,6 +1,7 @@
 const crypto = require('crypto')
 const mongoose = require('mongoose')
 const { authModel } = require('../models/weather')
+import store from '../client/src/store'
 
 const SignUp = ({ userName, password }) => {
   console.log(" hey",userName, password)
@@ -18,8 +19,13 @@ const Login = ({ userName, password }) => {
   console.log("auM", au)
   return authModel.findOne({ userName: userName, password: hash })
 }
+const UpdateUser = (cities, id) => {
+  console.log('user schmoozer', id, cities)
+  return authModel.updateOne({ _id: id }, { $set: { cities }})
+}
 
 module.exports = {
   SignUp,
-  Login
+  Login,
+  UpdateUser
 }

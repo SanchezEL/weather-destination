@@ -25,8 +25,8 @@ export const loadWeather = (searchTerm, time) => {
   }
   console.log(searchTerm, arrivalValue)
   return function (dispatch) {
-    // fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${searchTerm},us&APPID=12be784d551a3265d5555fbdc0a47b41`)
-    fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${searchTerm},us&APPID=5671234935774cd73b5c543867a39f6d`)
+    fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${searchTerm},us&APPID=12be784d551a3265d5555fbdc0a47b41`)
+    // fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${searchTerm},us&APPID=5671234935774cd73b5c543867a39f6d`)
       // .then(res => console.log(res.json()))
       .then(res => res.json())
       // finds the weather results at the correct 3 hour interval
@@ -95,21 +95,24 @@ export function signUp({ userName, password, cities }) {
 }
 
 export function setUser(user) {
+  console.log('setuser', user)
   return {
     type: 'SET_USER',
     value: user
   }
 }
 
-export function updateUser(userName) {
+export function updateUser(user, cities) {
+  console.log('updating the user', cities)
   return dispatch => {
+    console.log(cities)
     return axios({
       url: '/api/user',
       method: 'PUT',
       headers: {
         "Content-Type": "application/json"
       },
-      data: JSON.stringify({ userName }),
+      data: JSON.stringify(user, { cities }),
       withCredentials: true
     })
     .catch(err => Promise.reject(err))
