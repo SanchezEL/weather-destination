@@ -8,10 +8,12 @@ import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import SignUp from '../containers/SignUp'
 import Login from '../containers/Login'
+import Nav from '../components/Nav'
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
+  padding: 10px;
 `
 
 class Home extends Component {
@@ -23,10 +25,12 @@ class Home extends Component {
 
   render() {
     return (
-      <Wrapper>
+      <div>
+        <Nav/>
+        <Wrapper>
         <Card>
           <CardHeader
-            title="Welcome to the best app ever!"
+            title="Weather Destination"
             subheader="Login"
           />
           <CardContent>
@@ -48,6 +52,8 @@ class Home extends Component {
           </Collapse>
         </Card>
       </Wrapper>
+      </div>
+      
     );
   }
 }

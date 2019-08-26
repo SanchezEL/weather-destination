@@ -40,7 +40,14 @@
   }
 }
 .nav{
-  border: 1px solid purple;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(167, 33, 167);
+  color: white;
+}
+.navBeforeLogin{
   height: 100px;
   display: flex;
   justify-content: center;

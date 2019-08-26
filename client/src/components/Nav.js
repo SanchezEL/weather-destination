@@ -20,15 +20,25 @@ export default class Nav extends Component {
   }
   
   render() {
-    return (
-      <div className="nav">
-        <div className="title">
+    console.log('the logout', document.cookie.indexOf('id_token'))
+    if(document.cookie.indexOf('id_token')===0){
+      return (
+        <div className="nav">
+          <div className="title">
+            <h1>Weather Destination</h1>
+          </div>
+          <div className="logoutButton">
+            <Button onClick={this.logout}>Logout</Button>
+          </div>
+        </div>
+      )
+    }else{
+      return (
+        <div className="navBeforeLogin">
           <h1>Weather Destination</h1>
         </div>
-        <div className="logoutButton">
-          <Button onClick={this.logout}>Logout</Button>
-        </div>
-      </div>
-    )
+      )
+    }
+    
   }
 }
