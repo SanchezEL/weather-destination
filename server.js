@@ -7,6 +7,8 @@ const Auth = require('./models/weather')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
 const AuthController = require('./controllers/controllers')
+const dotenv = require('dotenv')
+dotenv.config()
 
 
 const app = express();
@@ -14,7 +16,7 @@ const app = express();
 
 const API_PORT = process.env.API_PORT || 3030;
 
-mongoose.connect('mongodb+srv://admin:admin@cluster0-bdhvc.mongodb.net/test?retryWrites=true&w=majority',{ useNewUrlParser: true })
+mongoose.connect(process.env.mongodburi,{ useNewUrlParser: true })
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
