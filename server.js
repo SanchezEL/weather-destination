@@ -111,12 +111,12 @@ app.use('/api', router);
 //     res.sendFile(path.join(__dirname, 'client', 'public', 'index.html'))
 //   })
 // }
-app.use(express.static(path.join(__dirname, "client", "build")))
+// app.use(express.static(path.join(__dirname, "client", "build")))
 
 // ...
 // Right before your app.listen(), add this:
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+    res.sendFile(path.join(__dirname + "/public/index.html"));
 });
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
