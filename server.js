@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const logger = require('morgan')
 const mongoose = require('mongoose')
 const Auth = require('./models/weather')
-// const path = require('path')
+const path = require('path')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
 const AuthController = require('./controllers/controllers')
@@ -111,5 +111,12 @@ app.use('/api', router);
 //     res.sendFile(path.join(__dirname, 'client', 'public', 'index.html'))
 //   })
 // }
+app.use(express.static(path.join(__dirname, "client", "build")))
+
+// ...
+// Right before your app.listen(), add this:
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 app.listen(API_PORT, () => console.log(`Listening on port ${API_PORT}`));
