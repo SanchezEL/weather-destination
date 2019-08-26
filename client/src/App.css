@@ -48,6 +48,22 @@
   background-color: rgb(167, 33, 167);
   color: white;
 }
+.title{
+  width: 58%;
+  /* border: 1px solid green; */
+  display: flex;
+  justify-content: flex-end;
+}
+.logoutButton{
+  width: 42%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+  /* border: 1px solid blue; */
+}
+.logoutButton button{
+  color: white;
+}
 .Weather {
   display: flex;
   flex-direction: column;
