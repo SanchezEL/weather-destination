@@ -1,4 +1,6 @@
 import { connect } from 'react-redux'
+import axios from 'axios'
+import jwt from 'jsonwebtoken'
 
 
 export const loadTime = (searchTerm) => {
@@ -23,8 +25,8 @@ export const loadWeather = (searchTerm, time) => {
   }
   console.log(searchTerm, arrivalValue)
   return function (dispatch) {
-    // fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${searchTerm},us&APPID=12be784d551a3265d5555fbdc0a47b41`)
-    fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${searchTerm},us&APPID=5671234935774cd73b5c543867a39f6d`)
+    fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${searchTerm},us&APPID=12be784d551a3265d5555fbdc0a47b41`)
+    // fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${searchTerm},us&APPID=5671234935774cd73b5c543867a39f6d`)
       // .then(res => console.log(res.json()))
       .then(res => res.json())
       // finds the weather results at the correct 3 hour interval
@@ -47,4 +49,87 @@ export const hasSearched = (searched) => {
     type: "USER_HAS_SEARCHED",
     value: searched
   }
+}
+export function login({ userName, password, cities }) {
+  return dispatch => {
+    return axios({
+      url: '/api/login',
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify({ userName, password })
+    })
+    .then(res => {
+      document.cookie = `id_token=${res.data};max-age=300;`
+      const payload = jwt.verify(res.data, 'secret')
+      console.log("payload: ", payload._doc)
+      dispatch({
+        type: 'LOGIN',
+        value: payload._doc
+      })
+    })
+    .catch(err => Promise.reject(err))
+  }
+}
+
+export function logout() {
+  return {
+    type: 'LOGOUT'
+  }
+}
+
+export function signUp({ userName, password, cities }) {
+  return dispatch => {
+    return axios({
+      url: '/api/signup',
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify({ userName, password, cities })
+    })
+    .then((res) => dispatch(login({ userName, password, cities: [] })))
+    .catch(err => Promise.reject(err))
+  }
+}
+
+export function setUser(user) {
+  console.log('setuser', user)
+  return {
+    type: 'SET_USER',
+    value: user
+  }
+}
+
+export function updateUser(user, cities) {
+  console.log('updating the user', user, cities)
+  return dispatch => {
+    console.log(cities)
+    return axios({
+      url: '/api/user',
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify(user, {cities}),
+      withCredentials: true
+    })
+    .catch(err => Promise.reject(err))
+  }  
+}
+
+export function updatePassword(password) {
+  return dispatch => {
+    return axios({
+      url: '/api/password',
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify({ password }),
+      withCredentials: true
+    })
+    .catch(err => Promise.reject(err))
+  }  
 }

@@ -19,7 +19,22 @@ const  hasSearched = (state = false, action) => {
       return state
   }
 }
+const user = (state = {}, action) => {
+  // state = ./state.js => user
+  console.log('action',action.type, action.value)
+  switch (action.type) {
+    case 'LOGIN':
+    case 'SET_USER':
+      console.log('settinguser', action.value)
+      return action.value
+    case 'LOGOUT':
+      return {}
+    default:
+      return state
+  }
+}
 export default combineReducers({
   weatherResults,
-  hasSearched
+  hasSearched,
+  user
 })
