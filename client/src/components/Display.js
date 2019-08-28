@@ -6,11 +6,11 @@ export default function Display(props) {
   console.log('the props in display are', props.weather.length, props.weather[0])
   //if the user has searched for a city and data has been returned back to them it will display the data for that city
   if(hourWeather && props.searched){
-    console.log(props.weather[0].weather[0], 'what in tarnation')
+    console.log(props.weather, props.weather[0].weather.main.temp, props.weather[0].weather.weather[0].description, 'what in tarnation')
     return (
       <div className="display-container">
         <div className="display">
-          <p>It will be {Math.round((((props.weather[0].main.temp) - 273.15) * (9/5) + 32 ))}°F with {props.weather[0].weather[0].description} at the time you're estimated to arrive at your destination!</p>
+          <p>It will be {Math.round((((props.weather[0].weather.main.temp) - 273.15) * (9/5) + 32 ))}°F with {props.weather[0].weather.weather[0].description} at the time you're estimated to arrive at your destination!</p>
         </div>
       </div>
     )

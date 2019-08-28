@@ -67,6 +67,7 @@ class PreviousWeather extends Component {
     console.log('this the data', this.state.data, newData)
     this.setState({ data: newData})
     this.props.user.cities.splice(i,1)
+    this.props.weather.splice(i,1)
     console.log(this.state.data, this.props.user)
     this.props.updateUser(this.props.user, this.props.user.cities)
     // fetch(`api/city/${id}`, { method: 'DELETE' })
@@ -76,24 +77,40 @@ class PreviousWeather extends Component {
   }
 
   render() {
-    if((this.props.weather.length >= this.state.data.length && this.props.weather.length>=1) && !(this.props.searched && this.props.weather.length ===1)){
+    console.log('props weather in prevweather',this.props.weather)
+    // &&(this.props.weather.weather.length >= this.state.data.length && this.props.weather.weather.length>=1) && !(this.props.searched && this.props.weather.weather.length ===1)
+    if((this.props.weather.length>0)){
+      console.log('it went through')
       return (
         <div className="prev-container">
           <div className="prev-cities">
             <h2>Previous Cities:</h2>
             <ul>
-              {this.props.user.cities.map((city,i) =>{
-                console.log(this.props.weather.length, this.props.weather, 'what the heck', i)
+              {
+                this.props.weather.map((item,i) =>{
+                  if(i<4){
+                    return(
+                      <li key={i}>
+                        <p><b>{item.city.toUpperCase()}</b></p>
+                        <p>It will be {Math.round((((item.weather.main.temp) - 273.15) * (9/5) +31))}°F with {item.weather.weather[0].description} at the estimated time of arrival..</p>
+                        <Button id={i} color="primary" onClick={() =>{this.handleDelete(item.city)}}>remove</Button>
+                      </li>
+                    )
+                  }
+                })
+              }
+              {/* {this.props.user.cities.map((city,i) =>{
+                console.log(this.props.weather[i].weather.length, this.props.weather, 'what the heck', i)
                 if(i<4){
                   return(
                     <li key={i}>
                       <p><b>{city.toUpperCase()}:</b></p>
-                      <p>It will be {Math.round((((this.props.weather[i].main.temp) - 273.15) * (9/5) + 32 ))}°F with {this.props.weather[0].weather[0].description} at the estimated time of arrival...</p>
+                      <p>It will be {Math.round((((this.props.weather.weather[i].main.temp) - 273.15) * (9/5) + 32 ))}°F with {this.props.weather.weather[0].weather[0].description} at the estimated time of arrival...</p>
                       <Button id={city._id} color="primary" onClick={() =>{this.handleDelete(city)}}>remove</Button>
                     </li>
                   )
                 }
-            })}
+            })} */}
             </ul>
           </div>
         </div>

@@ -30,17 +30,22 @@ export const loadWeather = (searchTerm, time) => {
       // .then(res => console.log(res.json()))
       .then(res => res.json())
       // finds the weather results at the correct 3 hour interval
-      .then(results => dispatch(searchLoaded(results.list[arrivalValue])))
+      .then(results => dispatch(searchLoaded(searchTerm, results.list[arrivalValue])))
       .catch(function(error) {                        
         console.log('Request failed', error);
       });
   }
 }
-export const searchLoaded = (weather) => {
+export const searchLoaded = (searchTerm, weather) => {
   console.log(weather)
+  var retObj = {
+    city: searchTerm,
+    weather: weather
+  }
+  console.log('retObj', retObj)
   return {
     type: "WEATHER_RESULTS_LOADED",
-    value: weather
+    value: retObj
   }
 }
 export const hasSearched = (searched) => {
